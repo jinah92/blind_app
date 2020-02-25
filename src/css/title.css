@@ -1,0 +1,16 @@
+.section {
+    background-color: darkred;
+    padding: 50px;
+}
+  
+  .section .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+  
+  .section h1 {
+    font-size: 60px;
+    color: azure;
+}

@@ -1,0 +1,53 @@
+    
+    /* 사이드바 스타일 */
+    .sidenav {
+        height:100%;
+        width: 0;
+        position: fixed;
+        z-index:1;
+        top: 0;
+        left: 0;
+        background-color: black;
+        overflow-x: hidden;
+        transition:0.5s ease-in-out;
+        padding-top: 60px;
+        color: white;
+    }
+    .sidenav a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #fff;
+        display: block;
+        transition: 0.2s ease-in-out;
+    }
+    .sidenav a:hover, .offcanvas a:focus {
+        color: #000;
+    }
+    .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px !important;
+        margin-left: 50px;
+    }
+    .openmenu:hover {
+        transition:0.5s ease-in-out;
+    }
+    .openmenu {
+        font-size: 25px;
+        cursor:pointer;
+        transition:0.5s ease-in-out;
+    }
+    .openmenu > i {
+        font-size: 30px;
+    }
+    /* 미디어쿼리 적용 */
+    @media screen and (max-height:450px) {
+        .sidenav {
+            padding-top:15px;
+        }
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
