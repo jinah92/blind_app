@@ -38,7 +38,7 @@ class Post extends Component {
         return(
             <div>
                 <div style={PostStyle}>
-                    <PostItems entries={this.state.posts} ShowPosts={this.ShowPosts}/>   
+                    <PostItems entries={this.state.posts} show={this.ShowPosts}/>   
                 </div>
             </div>
         );

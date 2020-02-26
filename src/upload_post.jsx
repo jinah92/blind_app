@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Button, Form} from 'react-bootstrap';
 import axios from "axios";
 import $ from 'jquery';
+import { HashRouter , NavLink, Route} from 'react-router-dom';
+import Post from './post';
 
 axios.defaults.withCredentials = true;
 const headers = {withCredentials: true};
@@ -9,24 +11,28 @@ const headers = {withCredentials: true};
 class UploadPost extends Component {
     upload_post = async()=>{
         if($.cookie("login_id")){
-            const send_param ={
-                headers,
-                content: this.postContent.value,
-                memberId: $.cookie("login_id")
-            }
-            try{
-                await axios.post('http://localhost:9090/post/upload', send_param)
-                .then((returnData)=>{
-                    if(returnData.data.message){
-                        alert("Post 등록완료");
-                    }else{
-                        alert("Post 등록실패");
-                    }
-                    this.postContent.value="";
-                    this.postContent.focus();
-                });
-            }catch(err){
-                console.log(err);
+            if(!this.postContent.value){
+                alert('내용을 입력해주세요');
+            }else{
+                const send_param ={
+                    headers,
+                    content: this.postContent.value,
+                    memberId: $.cookie("login_id")
+                }
+                try{
+                    await axios.post('http://localhost:9090/post/upload', send_param)
+                    .then((returnData)=>{
+                        if(returnData.data.message){
+                            alert("Post 등록완료");
+                        }else{
+                            alert("Post 등록실패");
+                        }
+                        this.postContent.value="";
+                        this.postContent.focus();
+                    });
+                }catch(err){
+                    console.log(err);
+                }
             }
         }else{
             alert('로그인이 필요합니다');
@@ -51,7 +57,7 @@ class UploadPost extends Component {
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                         <Form.Control as="textarea" rows="5" cols="10" placeholder="포스트 내용" ref={ref=>this.postContent=ref}/>
                     </Form.Group>
-                <Button onClick={this.upload_post}>글 등록</Button>
+                    <Button onClick={this.upload_post}>글 등록</Button>
                 </Form>
             </div>
         );

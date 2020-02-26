@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {NavLink, Route, HashRouter} from 'react-dom';
-import {ListGroup, Col, Button, Form, ButtonToolbar} from 'react-bootstrap';
+import {ListGroup, Col, Button, Form, ButtonToolbar, Badge} from 'react-bootstrap';
 import $ from 'jquery';
 import axios from 'axios';
 
@@ -12,8 +12,12 @@ class MyInfo extends Component {
         super(props);
         this.state={
             mainStyle: "visible",
-            registerStyle: "hidden"
+            registerStyle: "hidden",
+            postCount: 0
         };
+    }
+    componentDidMount(){
+        this.cnt_post();
     }
     deleteMember=()=>{
         const user_id=$.cookie('login_id');
@@ -65,7 +69,19 @@ class MyInfo extends Component {
             registerStyle: "visible"
         });
     }
-
+    cnt_post=async()=>{
+        const user_id=$.cookie('login_id');
+        const send_param={user_id, headers};
+        try{
+            const result = await axios.post('http://localhost:9090/member/postCount', send_param);
+            console.log(result.data.counts);
+            this.setState({
+                postCount: result.data.counts
+            });
+        }catch(err){
+            console.log(err);
+        }
+    }
     render(){
         const div_style={
             margin: 50
@@ -84,11 +100,12 @@ class MyInfo extends Component {
             margin:"auto",
             textAlign: "center"
         }
+        
         return(
             <div style={div_style}>
                 <Col md={{ span: 6, offset: 3 }} style={mainStyle}>
                     <ListGroup>
-                        <ListGroup.Item>나의 게시글</ListGroup.Item>
+                        <ListGroup.Item>나의 게시글 <Badge variant="info">{this.state.postCount}</Badge> </ListGroup.Item>
                         <ListGroup.Item>관심 게시글</ListGroup.Item>
                         <ListGroup.Item>관심 토픽</ListGroup.Item>
                         <ListGroup.Item><Button variant="warning" onClick={this.updateMember}>회원정보 수정</Button><Button variant="danger" onClick={this.deleteMember}>회원 탈퇴</Button></ListGroup.Item>

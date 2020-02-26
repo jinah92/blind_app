@@ -33,7 +33,7 @@ class PostItems extends Component {
                                             <SendMessage user={post.member.nickname} message={this.state.message}/></h6>
                                         </Form.Label>
                                         <ButtonGroup style={like_btn}>
-                                            <Like post={post.id} />
+                                            <Like post={post.id} like={post.like} show={this.props.show}/>
                                         </ButtonGroup>
                                         <h6> <br/><br/><br/>{post.content} </h6>
                                     </Form.Group> 

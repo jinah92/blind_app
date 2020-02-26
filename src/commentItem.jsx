@@ -20,7 +20,7 @@ class CommentItem extends Component {
         const comments = this.props.entries.map((comment)=>{
             let commentId=comment.id;
             return <div key={comment.id}>
-                       {comment.comment} <Moment format="YYYY-MM-DD HH:mm">{comment.createdAt}</Moment> <Badge variant="danger" size="sm" onClick={()=>{this.deleteComment(commentId)}}>댓글 삭제</Badge>
+                    {comment.member.nickname}: {comment.comment} <Moment format="YYYY-MM-DD HH:mm">{comment.createdAt}</Moment> <Badge variant="danger" size="sm" onClick={()=>{this.deleteComment(commentId)}}>댓글 삭제</Badge>
                     </div>
         });
         return(

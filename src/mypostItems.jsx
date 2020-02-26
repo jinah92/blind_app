@@ -3,6 +3,7 @@ import $ from 'jquery';
 import axios from 'axios';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import Moment from 'react-moment';
 import {Button, InputGroup, FormControl} from 'react-bootstrap';
 
 class MyPostItems extends Component {
@@ -56,8 +57,8 @@ class MyPostItems extends Component {
             <TableRow>
                 <TableCell>{this.props.id}</TableCell>
                 <TableCell>{this.props.nickname}</TableCell>
-                <TableCell>{this.props.createDate}</TableCell>
-                <TableCell>{this.props.updateDate}</TableCell>
+                <TableCell><Moment format="YYYY-MM-DD HH:mm">{this.props.createdAt}</Moment></TableCell>
+                <TableCell><Moment format="YYYY-MM-DD HH:mm">{this.props.updateDate}</Moment></TableCell>
                 <TableCell ref={ref=>this.default=ref} style={default_style}>{this.props.content}</TableCell>
                 <InputGroup className="mb-3" ref={ref=>this.update=ref} style={update_style}>
                     <FormControl as="textarea" aria-label="With textarea" ref={ref=>this.updated_content=ref}>{this.props.content}</FormControl>

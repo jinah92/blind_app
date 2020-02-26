@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from "axios";
 import {InputGroup, FormControl, Button} from 'react-bootstrap';
 import CommentItem from './commentItem';
+import $ from 'jquery';
 
 axios.defaults.withCredentials = true;
 const headers = {withCredentials: true};
@@ -35,7 +36,8 @@ class Comments extends Component {
         const send_param ={
             headers,
             comment: this.commentE.value,
-            postId: this.props.postId
+            postId: this.props.postId,
+            memberId: $.cookie('login_id')
         }
         try{
             await axios.post('http://localhost:9090/comment/insert', send_param)
