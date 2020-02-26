@@ -1,31 +1,37 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {Form, Badge, Col, Button} from 'react-bootstrap';
+import {Form, Badge, Col, Button, ButtonGroup} from 'react-bootstrap';
 import {Timeline, TimelineEvent} from 'react-event-timeline';
 import Comments from './comments';
 import SendMessage from './sendmessage';
+import Like from './like';
 
 axios.defaults.withCredentials = true;
 const headers = {withCredentials: true};
 
 class PostItems extends Component {
     render(){
+        const like_btn={
+            float: "right"
+        }
+        const nick_style={
+            float: "left"
+        }
         let posts = this.props.entries.map((post)=>{
             return <Col md={{ span: 6, offset: 3 }}>
                     <Timeline>
                             <TimelineEvent key={post.id} createdAt={post.createdAt} >
                                 <Form>
                                     <Form.Group>
-                                        <Form.Label as="textarea" rows="2">
-                                            <h6>
-                                            <Badge variant="light" >작성자: {post.member.nickname}</Badge><SendMessage user={post.member}/>
-                                            </h6>
-                                           
-                                                
-                                                {/* <Button variant="info" size="sm" onClick={this.sendMessage}>쪽지보내기</Button> */}
-                                             
+                                        <Form.Label as="textarea" rows="2" style={nick_style}>
+                                            <Button variant="light" size="sm" > 작성자 : {post.member.nickname} </Button>
+                                            <SendMessage user={post.member}/>
                                         </Form.Label>
-                                        <h5>{post.content} </h5>
+                                        <ButtonGroup style={like_btn}>
+                                            <Like post={post.id} ShowPosts={this.props.ShowPosts}/>
+                                            <Button variant="light" size="sm" > 좋아요 수: <Badge variant="light">{post.like}</Badge></Button>
+                                        </ButtonGroup>
+                                        <h6> <br/><br/><br/>{post.content} </h6>
                                     </Form.Group> 
                                 </Form>
                                 <Form>

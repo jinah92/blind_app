@@ -21,9 +21,10 @@ class MyPostItems extends Component {
                 alert('수정 완료');
                 this.setState({
                     myposts: result.data.result,
-                    update_style: "",
-                    default_style: "none"
+                    update_style: "none",
+                    default_style: ""
                 });
+                this.props.showPosts();
             }else{
                 alert('수정 오류');
             }

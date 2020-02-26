@@ -2,8 +2,8 @@ import React from 'react';
 import { MDBCarousel, MDBCarouselCaption, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask, MDBContainer } from
 "mdbreact";
 import {Button} from 'react-bootstrap';
-import Member from './member';
-import { Link } from 'react-router-dom';
+import Login from './login';
+import { NavLink, HashRouter, Route } from 'react-router-dom';
 
 const Home = () => {
         return (
@@ -17,6 +17,7 @@ const Home = () => {
               className="z-depth-1"
             >
               <MDBCarouselInner>
+                <HashRouter>
                 <MDBCarouselItem itemId="1">
                   <MDBView>
                     <img
@@ -27,7 +28,7 @@ const Home = () => {
                   <MDBMask overlay="black-light" />
                   </MDBView>
                   <MDBCarouselCaption>
-                    <h3 className="h3-responsive"><Button>로그인 하러가기</Button></h3>
+                    <h3 className="h3-responsive"><NavLink to='/login'><Button>로그인 하러가기</Button></NavLink></h3>
                     <p>First text</p>
                   </MDBCarouselCaption>
                 </MDBCarouselItem>
@@ -59,6 +60,10 @@ const Home = () => {
                     <p>Third text</p>
                   </MDBCarouselCaption>
                 </MDBCarouselItem>
+                    <div className="content">
+                      <Route path='/login' component={Login} />
+                    </div>
+                </HashRouter>
               </MDBCarouselInner>
             </MDBCarousel>
             </MDBContainer>

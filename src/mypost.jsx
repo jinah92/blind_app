@@ -17,7 +17,8 @@ class MyPost extends Component {
         super(props);
         this.state={
             myposts: [],
-            update_form: "none"
+            update_form: "none",
+            visible: "hidden"
         };
     }
     componentDidMount(){
@@ -27,22 +28,28 @@ class MyPost extends Component {
         const user_id=$.cookie("login_id");
         console.log(user_id);
         const send_param={user_id, headers};
-        try{
-            const result = await axios.post('http://localhost:9090/post/allpost_mine', send_param);
-            if(result.data.myposts){
-                this.setState({
-                    myposts: result.data.myposts
-                });
+        if(user_id){
+            try{
+                const result = await axios.post('http://localhost:9090/post/allpost_mine', send_param);
+                if(result.data.myposts){
+                    this.setState({
+                        myposts: result.data.myposts
+                    });
+                    this.setState({visible: "visible"});
+                }
+                console.log(result.data);
+            }catch(err){
+                console.log(err);
             }
-            console.log(result.data);
-        }catch(err){
-            console.log(err);
+        }else{
+            alert('로그인이 필요합니다');
         }
     }
     update_post=(post_id)=>{
         this.setState({
             update_form: "inline-block"
         });
+        this.ShowPosts();
         /* const user_id=$.cookie("login_id");
         const send_param={post_id, user_id};
         console.log(send_param);
@@ -67,6 +74,7 @@ class MyPost extends Component {
                 this.setState({
                     myposts: filteredItems
                 });
+                this.ShowPosts();
             }else{
                 alert("삭제 오류");
             }
@@ -84,29 +92,33 @@ class MyPost extends Component {
     } */
    
     render(){
+        const myPostList={
+            visibility: this.state.visible
+        }
         return(
             <div>
-                <Table>
-                <TableHead>
-                <TableRow>
-                <TableCell>게시번호</TableCell>
-                <TableCell>작성자</TableCell>
-                <TableCell>생성일</TableCell>
-                <TableCell>수정일</TableCell>
-                <TableCell>내용</TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                    {this.state.myposts.map((post) => {
-                    return <MyPostItems key={post.id} id={post.id} nickname={post.member.nickname} createDate={post.createdAt} updateDate={post.updatedAt} content={post.content} 
-                            superDelete={this.delete_post} superUpdate={this.update_post} entries={this.state.myposts}/>
-                    })}
-                    {this.checkMyPost}
-                </TableBody>
-                </Table>
-
+                <div style={myPostList}>
+                    <Table>
+                    <TableHead>
+                    <TableRow>
+                    <TableCell>게시번호</TableCell>
+                    <TableCell>작성자</TableCell>
+                    <TableCell>생성일</TableCell>
+                    <TableCell>수정일</TableCell>
+                    <TableCell>내용</TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                    </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.state.myposts.map((post) => {
+                        return <MyPostItems key={post.id} id={post.id} nickname={post.member.nickname} createDate={post.createdAt} updateDate={post.updatedAt} content={post.content} 
+                                superDelete={this.delete_post} superUpdate={this.update_post} entries={this.state.myposts} showPosts={this.ShowPosts}/>
+                        })}
+                        {this.checkMyPost}
+                    </TableBody>
+                    </Table>
+                </div>
             </div>
         );
     }

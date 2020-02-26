@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {NavLink, Route, HashRouter} from 'react-dom';
 import {Form, Button, ButtonToolbar} from "react-bootstrap";
 import $ from 'jquery';
 import {} from 'jquery.cookie';
@@ -9,7 +10,7 @@ const headers = {withCredentials: true};
 
 class Login extends Component {
     state={
-        login_nick: "",
+        login_nick: this.props.nick,
         loginStyle: "inline-block",
         logoutStyle: "none",
         registerStyle: "none",
@@ -140,19 +141,18 @@ class Login extends Component {
         }
         return(
             <div>
-                <div style={loginStyle}>
-                    <h2>로그인</h2>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Control type="email" placeholder="Enter email" ref={ref=>this.emailE=ref} required/>
-                    </Form.Group>
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Control type="password" placeholder="Enter Password" ref={ref=>this.pwdE=ref} required/>
-                    </Form.Group>
-
-                    <Button variant="primary" type="submit" onClick={this.login}>로그인</Button> 
-                    <Button variant="success" type="submit" onClick={this.register}>회원가입</Button>
-
-                </div>
+                    <div style={loginStyle}>
+                        <h2>로그인</h2>
+                        <Form.Group controlId="formBasicEmail">
+                            <Form.Control type="email" placeholder="Enter email" ref={ref=>this.emailE=ref} required/>
+                        </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            <Form.Control type="password" placeholder="Enter Password" ref={ref=>this.pwdE=ref} required/>
+                        </Form.Group>
+                    
+                        <Button variant="primary" type="submit" onClick={this.login}>로그인</Button> 
+                        <Button variant="success" type="submit" onClick={this.register}>회원가입</Button>
+                    </div>
 
                 <div style={logoutStyle}>
                     {login_nick} 님, 접속
@@ -187,6 +187,7 @@ class Login extends Component {
                         <Button variant="warning" type="submit" onClick={this.loginHome}>돌아가기</Button>
                     </ButtonToolbar>
                 </div>
+                
             </div>
         );
     }

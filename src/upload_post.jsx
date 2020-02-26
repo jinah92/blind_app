@@ -8,26 +8,29 @@ const headers = {withCredentials: true};
 
 class UploadPost extends Component {
     upload_post = async()=>{
-        const send_param ={
-            headers,
-            content: this.postContent.value,
-            memberId: $.cookie("login_id")
-        }
-        try{
-            await axios.post('http://localhost:9090/post/upload', send_param)
-            .then((returnData)=>{
-                if(returnData.data.message){
-                    alert("Post 등록완료");
-                }else{
-                    alert("Post 등록실패");
-                }
-                this.postContent.value="";
-                this.postContent.focus();
-            });
-        }catch(err){
-            console.log(err);
-        }
-        
+        if($.cookie("login_id")){
+            const send_param ={
+                headers,
+                content: this.postContent.value,
+                memberId: $.cookie("login_id")
+            }
+            try{
+                await axios.post('http://localhost:9090/post/upload', send_param)
+                .then((returnData)=>{
+                    if(returnData.data.message){
+                        alert("Post 등록완료");
+                    }else{
+                        alert("Post 등록실패");
+                    }
+                    this.postContent.value="";
+                    this.postContent.focus();
+                });
+            }catch(err){
+                console.log(err);
+            }
+        }else{
+            alert('로그인이 필요합니다');
+        }        
     }     
     render(){
         const upload_form={
