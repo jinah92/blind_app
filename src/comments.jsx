@@ -58,7 +58,7 @@ class Comments extends Component {
             <div>
                 <InputGroup size="sm" className="mb-3">
                     <FormControl ref={ref=>this.commentE=ref} aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-                    <Button onClick={this.comment_insert} variant="outline-dark">댓글 등록</Button>
+                    <Button onClick={this.comment_insert} size="sm" variant="outline-dark">댓글 등록</Button>
                 </InputGroup>
                     <CommentItem entries={this.state.comments} postId={this.props.postId} ShowComments={this.ShowComments}/>
             </div>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button} from 'react-bootstrap';
+import {Button, Badge} from 'react-bootstrap';
 import axios, {post} from 'axios';
 import $ from 'jquery';
 import Dialog from '@material-ui/core/Dialog';
@@ -25,7 +25,8 @@ class SendMessage extends Component {
             gender: '',
             job: '',
             fileName: '',
-            open: false
+            open: false,
+            show: 'visible'
         }
         /* this.handleFormSubmit = this.handleFormSubmit.bind(this)
         this.handleFileChange = this.handleFileChange.bind(this)
@@ -72,13 +73,25 @@ class SendMessage extends Component {
             open: false
         })
     }
+    componentDidMount(){
+        this.ShowMessage();
+    }
+    ShowMessage=()=>{
+        let nick=this.props.user;
+        if($.cookie('login_nick') === nick){
+            this.setState({show: 'hidden'});
+        }else{
+            this.setState({show: 'visible'});
+        }
+    }
     render(){
         const div_style={
+            visibility: this.state.show,
             float: "right"
         }
         return(
             <div style={div_style}>
-                <Button variant="dark" size="sm" onClick={this.handleClickOpen}>쪽지</Button>
+                <Badge variant="info" onClick={this.handleClickOpen}>쪽지</Badge>
                 <Dialog open={this.state.open} onClose={this.handleClose}>
                     <DialogTitle>쪽지 보내기</DialogTitle>
                     <DialogContent>

@@ -1,25 +1,53 @@
 import React, {Component} from 'react';
-import {Button} from 'react-bootstrap';
+import {Button, Badge} from 'react-bootstrap';
 import axios from 'axios';
+import $ from 'jquery';
+import './css/btn_style.css';
+import HeartImg from './img/heart.png';
+import HeartImg_disbaled from './img/heart_disabled.png';
 
 axios.defaults.withCredentials = true;
 const headers = {withCredentials: true};
 
 class Like extends Component {
+    state={
+        liked: 0,
+        heart: "none",
+        heart_disabled: ""
+    }
     likePost=async()=>{
+        $(".heart").on('click', ()=>{
+            $(this).toggleClass("heart-blast");
+        });
         const post_id=this.props.post;
         const send_param={post_id, headers};
         const result = await axios.post('http://localhost:9090/post/like', send_param);
         if(result.data.message){
-            alert('좋아요 성공');
-            this.props.ShowPost();
+            if(!this.state.liked){
+                alert('좋아요!');
+                this.setState({liked: 1, heart: "", heart_disabled: "none"});
+                // this.props.ShowPost();
+            }else{
+                alert('좋아요 취소!');
+                this.setState({liked: 0, heart: "none",  heart_disabled: ""});
+                
+            }
         }else{
             alert('좋아요 오류');
         }
     }
     render(){
+        const heartStyle={
+            display: this.state.heart
+        }
+        const heartStyle_disabled={
+            display: this.state.heart_disabled
+        }
         return(
-            <Button size="sm" onClick={this.likePost}>좋아요</Button>
+            <div >
+                <Button variant="light" size="sm" onClick={this.likePost}><img style={heartStyle} src={HeartImg}  width='15' height='15' /><img style={heartStyle_disabled} src={HeartImg_disbaled}  width='15' height='15' /></Button>
+                <Button variant="light" size="sm" disabled={this.state.liked}><Badge variant="light">{this.props.post}</Badge></Button>
+            </div>
         );
     }
 }

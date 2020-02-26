@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from "axios";
 import {Form, Badge, Col, Button, ButtonGroup} from 'react-bootstrap';
 import {Timeline, TimelineEvent} from 'react-event-timeline';
+import Moment from 'react-moment';
 import Comments from './comments';
 import SendMessage from './sendmessage';
 import Like from './like';
@@ -10,6 +11,9 @@ axios.defaults.withCredentials = true;
 const headers = {withCredentials: true};
 
 class PostItems extends Component {
+    state={
+        message: ""
+    };
     render(){
         const like_btn={
             float: "right"
@@ -20,16 +24,16 @@ class PostItems extends Component {
         let posts = this.props.entries.map((post)=>{
             return <Col md={{ span: 6, offset: 3 }}>
                     <Timeline>
-                            <TimelineEvent key={post.id} createdAt={post.createdAt} >
+                            <TimelineEvent key={post.id}>
                                 <Form>
+                                        <Moment format="YYYY-MM-DD HH:mm">{post.createdAt}</Moment>
                                     <Form.Group>
                                         <Form.Label as="textarea" rows="2" style={nick_style}>
-                                            <Button variant="light" size="sm" > 작성자 : {post.member.nickname} </Button>
-                                            <SendMessage user={post.member}/>
+                                            <h6><strong>{post.member.nickname}</strong>
+                                            <SendMessage user={post.member.nickname} message={this.state.message}/></h6>
                                         </Form.Label>
                                         <ButtonGroup style={like_btn}>
-                                            <Like post={post.id} ShowPosts={this.props.ShowPosts}/>
-                                            <Button variant="light" size="sm" > 좋아요 수: <Badge variant="light">{post.like}</Badge></Button>
+                                            <Like post={post.id} />
                                         </ButtonGroup>
                                         <h6> <br/><br/><br/>{post.content} </h6>
                                     </Form.Group> 
