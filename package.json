@@ -8,7 +8,9 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "gh-pages": "^2.2.0",
     "jquery": "^3.4.1",
     "jquery.cookie": "^1.4.1",
     "mdbreact": "^4.25.2",
@@ -24,7 +26,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,5 +44,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "homepage": "https://jinah92.github.io/Blind_App/"
 }

@@ -1,0 +1,13 @@
+body {
+    background-color: darkmagenta;
+}
+.nav {
+    height: 300;
+    text-align: center;
+    border-bottom: 3;
+    color: cornsilk;
+    font-size: 80px;
+}
+.content {
+    text-align: center;
+}
