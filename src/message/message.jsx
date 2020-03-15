@@ -106,6 +106,10 @@ class MyMessage extends Component {
               </TableHead>
               <TableBody>
                 {this.state.sent_msg.map(message => {
+                  if (!message.member) {
+                    message.member = [];
+                    message.member.nickname = "탈퇴한 사용자";
+                  }
                   return (
                     <SentMsg
                       key={message.id}
@@ -114,9 +118,7 @@ class MyMessage extends Component {
                       createDate={message.createdAt}
                       updateDate={message.updatedAt}
                       message={message.message}
-                      /* superDelete={this.delete_post} superUpdate={this.update_post}  */ entries={
-                        this.state.sent_msg
-                      }
+                      entries={this.state.sent_msg}
                       showMessages={this.ShowMessages}
                     />
                   );

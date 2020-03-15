@@ -52,8 +52,7 @@ class MyPost extends Component {
     this.ShowPosts();
   };
   delete_post = post_id => {
-    const user_id = $.cookie("login_id");
-    const send_param = { post_id, user_id };
+    const send_param = { post_id };
     console.log(send_param);
     $.post("http://localhost:9090/post/delete", send_param, returnData => {
       if (returnData.result) {
